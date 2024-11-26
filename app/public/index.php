@@ -18,23 +18,16 @@ try {
 <?php include 'component/navbar.php'; ?>
 
 <div class="container text-center">
-    <div class="card shadow p-4">
-        <div class="card-body">
-            <?php if (!empty($_SESSION['user_id'])): ?>
-                <h1 class="card-title">Welcome, <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>!</h1>
-                </div>
-                <div class="mt-3">
-                    <a href="/logout.php" class="btn btn-secondary">Logout</a>
-                </div>
-            <?php else: ?>
-                <h1 class="card-title">Welcome, Guest!</h1>
-                </div>
-                <div class="mt-3">
-                    <a href="/login.php" class="btn btn-primary">Login</a>
-                </div>
-            <?php endif; ?>
-        </div>
-    </div>
+
+    <!-- Temp hardcoded -->
+    <?php include 'components/card.php';
+    $image = "https://data.maglr.com/3363/issues/37129/470998/assets/media/8a4e3b401bc646c566d2e2b5dbbca487453f648a076f32648c4ace721b7f7ad6.jpg";
+    $title = "Title";
+    $description = "Description babagjshaba";
+    $upvotes = 10;
+    $downvotes = 3;
+    renderCard($image, $title, $description, $upvotes, $downvotes);
+    ?>
 </div>
 
 <!-- Footer -->
