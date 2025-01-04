@@ -2,13 +2,49 @@ CREATE DATABASE IF NOT EXISTS assignmentdb;
 
 USE assignmentdb;
 
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    role VARCHAR(10) DEFAULT 'user',
-    profile_picture VARCHAR(255) DEFAULT 'upload/default.png'
+CREATE TABLE `users` (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `role` ENUM('user', 'admin') DEFAULT 'user',
+  `profile_picture` varchar(255) DEFAULT 'upload/default.png',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `posts` (
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `content` TEXT NOT NULL,
+    `date_posted` datetime DEFAULT current_timestamp(),
+    `upvote_count` INT DEFAULT 0,
+    `downvote_count` INT DEFAULT 0,
+    `author_id` INT NOT NULL,
+    `is_deleted` TINYINT(1) DEFAULT 0,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`author_id`) REFERENCES users(`id`)
+);
+
+CREATE TABLE `likes` (
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `user_id` INT DEFAULT NULL,
+    `post_id` INT DEFAULT NULL,
+    `created_at` timestamp DEFAULT current_timestamp(),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
+);
+
+CREATE TABLE `comments` (
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `user_id` INT DEFAULT NULL,
+    `post_id` INT DEFAULT NULL,
+    `content` TEXT,
+    `created-at` timestamp DEFAULT current_timestamp(),
+    `is_deleted` TINYINT(1) DEFAULT 0,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
 );
 
 INSERT INTO users (username, password, email) VALUES
@@ -22,3 +58,36 @@ INSERT INTO users (username, password, email) VALUES
     ("eve", "$2y$12$92e9nCUWNm.ay9s9u7a39Od6FgAOmKrFocOdpzfxfJl4zNj.Hgjs6", "eve@example.com"), /* eve:Eve2468 */
     ("frank", "$2y$12$y3zF1nHaHuaDYvHqZ6OFSePUmPOgPCmF3OrQjlxsoZtyIbbRWf.7O", "frank@example.com"), /* frank:Frank12345 */
     ("grace", "$2y$12$z9x9mjysUjUKhBeMjrLZBYwmex0pxbKdbtqgTjTw1qlqRU9wXQDLf", "grace@example.com"); /* grace:Grace789 */
+
+INSERT INTO posts (title, content, author_id) VALUES
+    ('How to Learn SQL', 'SQL is a fundamental skill for database management. Start by learning the basic commands like SELECT, INSERT, UPDATE, DELETE.', 1), -- admin
+    ('My First Post on Technology', 'This post is about the impact of artificial intelligence in modern software development.', 2), -- user
+    ('Web Development Tips', 'Web development can be fun and challenging. Here are some tips to make your journey smoother.', 3), -- bart
+    ('The Future of AI', 'AI is changing the world in so many ways. From self-driving cars to machine learning, the possibilities are endless.', 4), -- alice
+    ('Tech Innovations in 2025', 'In 2025, we expect to see significant improvements in AI and quantum computing.', 5); -- bob
+
+-- Inserting comments for the first post
+INSERT INTO comments (user_id, post_id, content) VALUES
+    (2, 1, 'Great tips! I really need to improve my SQL skills.'), -- user commenting on post 1
+    (3, 1, 'I found the SELECT command quite difficult at first, but practice makes it easier!'), -- bart commenting on post 1
+    (4, 1, 'SQL is a must-learn for anyone working with databases!'); -- alice commenting on post 1
+
+-- Inserting comments for the second post
+INSERT INTO comments (user_id, post_id, content) VALUES
+    (5, 2, 'AI is fascinating, but I think it will also bring challenges for job markets.'), -- bob commenting on post 2
+    (6, 2, 'Yes, AI is amazing, but I believe it needs to be regulated for ethical reasons.'); -- charlie commenting on post 2
+
+-- Inserting comments for the third post
+INSERT INTO comments (user_id, post_id, content) VALUES
+    (7, 3, 'Web development has indeed become more streamlined with modern tools like React and Vue.'), -- david commenting on post 3
+    (8, 3, 'Totally agree! But I struggle with JavaScript sometimes.'); -- eve commenting on post 3
+
+-- Inserting comments for the fourth post
+INSERT INTO comments (user_id, post_id, content) VALUES
+    (9, 4, 'AI is definitely the future, but we need to tread carefully with its applications.'), -- frank commenting on post 4
+    (10, 4, 'Absolutely, AI could do wonders in healthcare and education!'); -- grace commenting on post 4
+
+-- Inserting comments for the fifth post
+INSERT INTO comments (user_id, post_id, content) VALUES
+    (1, 5, 'I can’t wait for the advancements in quantum computing!'), -- admin commenting on post 5
+    (2, 5, 'Quantum computing will completely transform data encryption!'); -- user commenting on post 5
