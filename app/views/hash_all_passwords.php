@@ -1,8 +1,20 @@
 <?php
-require_once("dbconfig.php");
+
+namespace App;
+
+use Exception;
+use PDO;
 
 try {
-    $connection = new PDO("mysql:host=$servername;dbname=$databasename", $username, $password);
+    // Database configuration
+    $type = "mysql";
+    $servername = "mysql";
+    $username = "dev";
+    $password = "dev";
+    $dbname = "assignmentdb";
+
+    // Create a new PDO connection
+    $connection = new PDO("$type:host=$servername;dbname=$dbname", $username, $password);
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Fetch all users
@@ -27,6 +39,6 @@ try {
     }
 
     echo "All passwords have been hashed.";
-} catch (PDOException $e) {
+} catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }

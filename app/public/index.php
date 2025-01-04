@@ -1,34 +1,32 @@
 <?php
-session_start();
+require '../vendor/autoload.php';
 
-require_once("dbconfig.php");
-try {
-    $connection = new PDO("mysql:host=$servername;dbname=$databasename", $username, $password);
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Connection Failed: " . $e->getMessage();
-    exit();
-}
+use App\Router;
+use App\Controllers\HomeController;
+use App\Controllers\ProfileController;
+use App\Controllers\AdminController;
+use App\Controllers\AuthController;
 
-?>
+$router = new Router();
 
-<!-- Header -->
-<?php include 'component/header.php'; ?>
-<!-- Navbar -->
-<?php include 'component/navbar.php'; ?>
+// home
+$router->add('/', HomeController::class, 'index');
 
-<div class="container text-center">
+// -> profile
+$router->add('/profile/{username}', ProfileController::class, 'showProfile');
+$router->add('/profile/{username}/edit', ProfileController::class, 'editProfile');
+$router->add('/profile/{username}/picture', ProfileController::class, 'updateProfilePicture');
 
-    <!-- Temp hardcoded -->
-    <?php include 'components/card.php';
-    $image = "https://data.maglr.com/3363/issues/37129/470998/assets/media/8a4e3b401bc646c566d2e2b5dbbca487453f648a076f32648c4ace721b7f7ad6.jpg";
-    $title = "Title";
-    $description = "Description babagjshaba";
-    $upvotes = 10;
-    $downvotes = 3;
-    renderCard($image, $title, $description, $upvotes, $downvotes);
-    ?>
-</div>
+// -> admin
+$router->add('/admin', AdminController::class, 'admin');
 
-<!-- Footer -->
-<?php include 'component/footer.php'; ?>
+// -> auth
+$router->add('/login', AuthController::class, 'login');
+$router->add('/register', AuthController::class, 'register');
+$router->add('/logout', AuthController::class, 'logout');
+
+// -> temp
+$router->add('/hash', HomeController::class, 'hash');
+
+// request
+$router->route($_SERVER['REQUEST_URI']);
