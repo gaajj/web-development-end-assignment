@@ -38,4 +38,27 @@ class PostRepository
         }
         return $posts;
     }
+
+    public function getById($id)
+    {
+        $query = 'SELECT * FROM posts WHERE id = :id AND is_deleted = 0';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return new Post(
+                $result['id'],
+                $result['title'],
+                $result['content'],
+                $result['date_posted'],
+                $result['upvote_count'],
+                $result['downvote_count'],
+                $result['author_id'],
+                $result['is_deleted']
+            );
+        }
+    }
 }

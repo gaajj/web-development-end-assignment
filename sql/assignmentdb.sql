@@ -40,7 +40,7 @@ CREATE TABLE `comments` (
     `user_id` INT DEFAULT NULL,
     `post_id` INT DEFAULT NULL,
     `content` TEXT,
-    `created-at` timestamp DEFAULT current_timestamp(),
+    `created_at` timestamp DEFAULT current_timestamp(),
     `is_deleted` TINYINT(1) DEFAULT 0,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES users(`id`),

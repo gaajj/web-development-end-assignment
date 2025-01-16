@@ -18,4 +18,9 @@ class PostService
     {
         return $this->postRepository->getAll();
     }
+
+    public function getById($id)
+    {
+        return $this->postRepository->getById($id);
+    }
 }

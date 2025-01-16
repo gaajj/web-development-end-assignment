@@ -4,6 +4,7 @@ require '../vendor/autoload.php';
 use App\Router;
 use App\Controllers\HomeController;
 use App\Controllers\ProfileController;
+use App\Controllers\PostController;
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
 
@@ -16,6 +17,9 @@ $router->add('/', HomeController::class, 'index');
 $router->add('/profile/{username}', ProfileController::class, 'showProfile');
 $router->add('/profile/{username}/edit', ProfileController::class, 'editProfile');
 $router->add('/profile/{username}/picture', ProfileController::class, 'updateProfilePicture');
+
+// -> post
+$router->add('/post/{post_id}', PostController::class, 'showPost');
 
 // -> admin
 $router->add('/admin', AdminController::class, 'admin');

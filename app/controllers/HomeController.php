@@ -10,8 +10,6 @@ class HomeController
     {
         session_start();
 
-        $username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
-
         $postService = new PostService();
         $posts = $postService->getAll();
 
