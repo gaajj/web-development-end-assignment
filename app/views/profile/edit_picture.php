@@ -16,8 +16,8 @@
                 <div class="d-flex mb-3 align-items-center">
                     <div class="d-flex justify-content-center"
                         style="width: 100px; height: 100px; overflow: hidden; border-radius: 50%; position: relative; margin-right: 15px;">
-                        <img src="<?php echo $_SESSION['profile_picture']; ?>" alt="profile picture"
-                            style="width: 100%; height: 100%; object-fit: cover;" />
+                        <img src="<?= !empty($user->profile_picture) ? '/../../uploads/profiles/' . htmlspecialchars($user->profile_picture) : '/../../uploads/profiles/default.png' ?>"
+                            alt="profile picture" style="width: 100%; height: 100%; object-fit: cover;" />
                     </div>
                     <div>
                         <label for="picture" class="form-label">Select picture:</label>

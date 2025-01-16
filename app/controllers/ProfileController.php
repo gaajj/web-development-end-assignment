@@ -22,20 +22,20 @@ class ProfileController
         $user = $this->userService->getByUsername($username);
 
         if ($user) {
-            // 1: Edit if own profile
-            if ($user->username == $_SESSION['username']) {
+            // If own profile, redirect to edit
+            if (isset($_SESSION['username']) && $user->username == $_SESSION['username']) {
                 header('Location: /profile/' . $username . '/edit');
                 exit();
-            } else {
-                // 2: Edit if admin
-                if ($_SESSION['role'] == 'admin') {
-                    header('Location: /profile/' . $username . '/edit');
-                    exit();
-                } else {
-                    // 3: Show profile
-                    include __DIR__ . '/../views/profile/profile.php';
-                }
             }
+
+            // If logged in as admin, redirect to edit
+            if (isset($_SESSION['username']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                header('Location: /profile/' . $username . '/edit');
+                exit();
+            }
+
+            //  show profile page
+            include __DIR__ . '/../views/profile/profile.php';
         } else {
             include __DIR__ . '/../views/profile/error.php';
         }
@@ -115,44 +115,60 @@ class ProfileController
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['picture'])) {
             $file = $_FILES['picture'];
+
+            // Check for file upload errors
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['profile_message'] = 'File upload error: ' . $file['error'];
+                header('Location: /profile/' . $username . '/edit');
+                exit();
+            }
+
+            // Generate a unique file name
             $fileName = uniqid() . '_' . basename($file['name']);
-            $uploadPath = '/uploads/profiles/' . $fileName;
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/profiles/';
+            $uploadPath = $uploadDir . $fileName;
             $tempPath = $file['tmp_name'];
 
+            // Ensure the upload directory exists
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            // Validate file type
             $allowedTypes = ['image/jpeg', 'image/png'];
             if (!in_array($file['type'], $allowedTypes)) {
-                // TODO: Message handler : only ... files allowed
+                $_SESSION['profile_message'] = 'Only JPEG and PNG files are allowed.';
                 header('Location: /profile/' . $username . '/edit');
                 exit();
             }
 
-            $ffmpegCommand = "ffmpeg -i $tempPath -vf 'scale=500:01' -quality 85 $uploadPath 2>&1";
-            exec($ffmpegCommand, $output, $returnCode);
-
-            if ($returnCode !== 0) {
-                //message : error
-                header('Location: /profile/' . $username . '/edit');
-                exit();
-            }
-
-            try {
-                if ($this->userService->updateProfilePicture($username, $uploadPath)) {
-                    $_SESSION['profile_picture'] = $uploadPath;
-                    // message : updated succefully
-                } else {
-                    throw new Exception('Failed to update profile picture');
+            // Move the uploaded file
+            if (move_uploaded_file($tempPath, $uploadPath)) {
+                try {
+                    // Update the profile picture path in the database
+                    $relativePath = $fileName;
+                    if ($this->userService->updateProfilePicture($username, $relativePath)) {
+                        $_SESSION['profile_picture'] = $relativePath;
+                        $_SESSION['profile_message'] = 'Profile picture updated successfully!';
+                    } else {
+                        throw new Exception('Failed to update profile picture in the database.');
+                    }
+                } catch (Exception $e) {
+                    // Delete the uploaded file if an error occurs
+                    if (file_exists($uploadPath)) {
+                        unlink($uploadPath);
+                    }
+                    $_SESSION['profile_message'] = 'An error occurred: ' . $e->getMessage();
                 }
-            } catch (Exception $e) {
-                if (file_exists($uploadPath)) {
-                    unlink($uploadPath);
-                }
-                // message : error updating pic
+            } else {
+                $_SESSION['profile_message'] = 'Failed to move uploaded file.';
             }
 
             header('Location: /profile/' . $username . '/edit');
             exit();
         }
-        // If not POST request, redirect to edit page
+
+        // If not a POST request, redirect to the edit page
         header('Location: /profile/' . $username . '/edit');
         exit();
     }

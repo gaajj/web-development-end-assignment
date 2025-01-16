@@ -11,8 +11,9 @@ class Comment
     public $created_at;
     public $is_deleted;
     public $username;
+    public $profile_picture;
 
-    public function __construct($id = null, $user_id = null, $post_id = null, $content = null, $created_at = null, $is_deleted = 0, $username = null)
+    public function __construct($id = null, $user_id = null, $post_id = null, $content = null, $created_at = null, $is_deleted = 0, $username = null, $profile_picture = null)
     {
         $this->id = $id;
         $this->user_id = $user_id;
@@ -21,5 +22,6 @@ class Comment
         $this->created_at = $created_at;
         $this->is_deleted = $is_deleted;
         $this->username = $username;
+        $this->profile_picture = $profile_picture;
     }
 }

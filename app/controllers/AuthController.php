@@ -29,7 +29,13 @@ class AuthController
                 $_SESSION['username'] = $user->username;
                 $_SESSION['email'] = $user->email;
                 $_SESSION['role'] = $user->role;
-                $_SESSION['profile_picture'] = '/../uploads/profiles/' . $user->profile_picture;
+
+                $profilepath = '/uploads/profiles/' . $user->profile_picture;
+                if (file_exists($profilepath)) {
+                    $_SESSION['profile_picture'] = $profilepath;
+                } else {
+                    $_SESSION['profile_picture'] = '/uploads/profiles/default.png'; // default profile picture
+                }
 
                 header('Location: /');
                 exit();

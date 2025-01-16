@@ -24,6 +24,11 @@ class UserService
         return $this->userRepository->getByUsername($username);
     }
 
+    public function getById($id)
+    {
+        return $this->userRepository->getById($id);
+    }
+
     public function checkUsernameTaken($username)
     {
         return $this->userRepository->checkUsernameTaken($username);

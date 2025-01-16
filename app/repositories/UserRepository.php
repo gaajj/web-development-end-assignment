@@ -44,6 +44,21 @@ class UserRepository
         return null;
     }
 
+    public function getById($id)
+    {
+        $query = 'SELECT id, username, password, email, role, profile_picture FROM users WHERE id=:id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return new User($result['id'], $result['username'], $result['password'], $result['email'], $result['role'], $result['profile_picture']);
+        }
+
+        return null;
+    }
+
     public function checkUsernameTaken($username)
     {
         $query = 'SELECT id FROM users WHERE username=:username';
@@ -78,9 +93,9 @@ class UserRepository
 
     public function updateProfilePicture($username, $picturePath)
     {
-        $query = 'UPDATE users SET picture_path = :picture_path WHERE username = :username';
+        $query = 'UPDATE users SET profile_picture = :profile_picture WHERE username = :username';
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':picture_path', $picturePath);
+        $stmt->bindParam(':profile_picture', $picturePath);
         $stmt->bindParam(':username', $username);
         return $stmt->execute();
     }

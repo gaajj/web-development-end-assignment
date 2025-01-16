@@ -4,19 +4,21 @@
     <!-- Profile Picture Section -->
     <div class="row justify-content-center">
         <div class="col-md-6 text-center">
-            <h1 class="display-4 mb-3 fw-bold"><?php echo htmlspecialchars($user->username); ?></h1>
-            <div class="mb-4">
-                <img src="path/to/profile-pic.jpg" alt="Profile Picture" class="img-fluid rounded-circle"
-                    style="width: 150px; height: 150px; object-fit: cover;">
-            </div>
-            <p class="lead">
-                Email: <?php echo htmlspecialchars($user->email); ?>
-            </p>
+            <!-- Profile Picture -->
+            <img src="<?= !empty($user->profile_picture) ? '/../../uploads/profiles/' . htmlspecialchars($user->profile_picture) : '/../../uploads/profiles/default.png' ?>"
+                alt="Profile Picture" class="rounded-circle mb-3"
+                style="width: 150px; height: 150px; object-fit: cover;">
 
-            <?php if ($user->id == $_SESSION['user_id']): ?>
-                <a href="<?php echo htmlspecialchars($user->username); ?>/edit" class="btn btn-primary btn-lg">Edit
-                    Profile</a>
+            <!-- Username -->
+            <h1 class="display-4 mb-1 fw-bold"><?= htmlspecialchars($user->username); ?></h1>
+
+            <!-- Role (only if admin) -->
+            <?php if ($user->role === 'admin'): ?>
+                <p class="text-muted mb-3">(Admin)</p>
             <?php endif; ?>
+
+            <!-- Email -->
+            <p class="lead">Email: <?= htmlspecialchars($user->email); ?></p>
         </div>
     </div>
 </div>

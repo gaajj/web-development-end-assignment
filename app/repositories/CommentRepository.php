@@ -19,7 +19,7 @@ class Commentrepository
     public function getAllByPostId($postId)
     {
         $query = '
-        SELECT comments.*, users.username 
+        SELECT comments.*, users.username , users.profile_picture
         FROM comments 
         INNER JOIN users ON comments.user_id = users.id 
         WHERE comments.post_id = :post_id AND comments.is_deleted = 0
@@ -41,6 +41,7 @@ class Commentrepository
                 $row['is_deleted']
             );
             $comment->username = $row['username'];
+            $comment->profile_picture = $row['profile_picture'];
             $comments[] = $comment;
         }
         return $comments;

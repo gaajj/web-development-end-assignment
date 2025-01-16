@@ -4,16 +4,19 @@ namespace App\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Services\UserService;
 use App\Services\PostService;
 use App\Services\CommentService;
 
 class PostController
 {
+    private $userService;
     private $postService;
     private $commentService;
 
     public function __construct()
     {
+        $this->userService = new UserService();
         $this->postService = new PostService();
         $this->commentService = new CommentService();
     }
