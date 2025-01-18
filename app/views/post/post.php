@@ -11,7 +11,7 @@
             </p>
 
             <!-- Delete Post Button (for author) -->
-            <?php if ($post->author_id == $_SESSION['user_id']): ?>
+            <?php if (isset($_SESSION['user_id']) && ($post->author_id == $_SESSION['user_id'] || $_SESSION['role'] == 'admin')): ?>
                 <form action="/post/view/<?= $post->id ?>/delete" method="POST" class="d-inline">
                     <button type="submit" class="btn btn-danger">Delete Post</button>
                 </form>

@@ -9,6 +9,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `role` ENUM('user', 'admin') DEFAULT 'user',
   `profile_picture` varchar(255) DEFAULT 'default.png',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 

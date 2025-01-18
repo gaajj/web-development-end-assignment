@@ -76,7 +76,7 @@ class PostController
 
         $post = $this->postService->getById($post_id);
 
-        if ($post && $_SESSION['user_id'] == $post->author_id) {
+        if ($post && ($_SESSION['user_id'] == $post->author_id || $_SESSION['role'] == 'admin')) {
             $this->postService->removePost($post_id);
 
             header('Location: /');
@@ -114,7 +114,7 @@ class PostController
 
         $comment = $this->commentService->getCommentById($comment_id);
 
-        if ($comment && $_SESSION['user_id'] == $comment->user_id) {
+        if ($comment && ($_SESSION['user_id'] == $comment->user_id || $_SESSION['role'] == 'admin')) {
             $this->commentService->removeComment($comment);
             header('Location: /post/view/' . $post_id);
             exit;

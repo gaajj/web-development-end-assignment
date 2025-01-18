@@ -173,7 +173,18 @@ class ProfileController
         exit();
     }
 
-    public function getUserJson($username) {
+    public function deleteProfile($username)
+    {
+        $user = $this->userService->getByUsername($username);
+        if ($user) {
+            $this->userService->deleteProfile($user);
+        } else {
+            // error
+        }
+    }
+
+    public function getUserJson($username)
+    {
         header('Content-Type: application/json');
         $user = $this->userService->getByUsername($username);
         echo json_encode($user);

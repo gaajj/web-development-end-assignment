@@ -1,7 +1,12 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Posts</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-center mb-0">Posts</h1>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="/post/create" class="btn btn-success">Create New Post</a>
+        <?php endif; ?>
+    </div>
     <ul class="list-group">
         <?php foreach ($posts as $post): ?>
             <li class="list-group-item p-0">

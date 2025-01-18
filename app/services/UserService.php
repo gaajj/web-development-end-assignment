@@ -49,6 +49,11 @@ class UserService
         return $this->userRepository->updateProfilePicture($username, $picturePath);
     }
 
+    public function deleteProfile($user)
+    {
+        return $this->userRepository->deleteProfile($user);
+    }
+
     public function authenticate(string $username, string $password)
     {
         $user = $this->userRepository->getByUsername($username);
@@ -62,7 +67,7 @@ class UserService
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $user = new User(null, $username, $hashedPassword, $email);
+        $user = new User(null, $username, $hashedPassword, $email, null, null, 0);
         $this->userRepository->create($user);
 
         return true;

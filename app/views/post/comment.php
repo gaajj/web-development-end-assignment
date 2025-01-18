@@ -12,7 +12,7 @@
                 <h5 class="mb-0 text-primary"><?= htmlspecialchars($comment->username) ?></h5>
             </a>
         </div>
-        <?php if ($_SESSION['user_id'] == $comment->user_id): ?>
+        <?php if ((isset($_SESSION['user_id']) && $_SESSION['user_id'] == $comment->user_id) || $_SESSION['role'] == 'admin'): ?>
             <form action="/post/view/<?= $post->id ?>/comment/<?= $comment->id ?>/delete" method="POST">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>

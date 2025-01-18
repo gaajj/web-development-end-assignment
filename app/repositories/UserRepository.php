@@ -19,7 +19,7 @@ class UserRepository
 
     public function getAll()
     {
-        $query = 'SELECT id, username, password, email, role, profile_picture FROM users';
+        $query = 'SELECT id, username, password, email, role, profile_picture, is_deleted FROM users';
         $stmt = $this->db->query($query);
         $users = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
@@ -30,7 +30,7 @@ class UserRepository
 
     public function getByUsername($username)
     {
-        $query = 'SELECT id, username, password, email, role, profile_picture FROM users WHERE username=:username';
+        $query = 'SELECT id, username, password, email, role, profile_picture, is_deleted FROM users WHERE username=:username';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
@@ -41,7 +41,7 @@ class UserRepository
 
     public function getById($id)
     {
-        $query = 'SELECT id, username, password, email, role, profile_picture FROM users WHERE id=:id';
+        $query = 'SELECT id, username, password, email, role, profile_picture, is_deleted FROM users WHERE id=:id';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -103,6 +103,16 @@ class UserRepository
         $stmt->execute();
     }
 
+    public function deleteProfile($user)
+    {
+        $query = 'UPDATE users SET is_deleted = 1 WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $user->id);
+        $stmt->execute();
+
+        return $this->db->lastInsertId();
+    }
+
     public function userReader($row)
     {
         return new User(
@@ -111,7 +121,8 @@ class UserRepository
             $row['password'],
             $row['email'],
             $row['role'],
-            $row['profile_picture'] ?? null
+            $row['profile_picture'] ?? null,
+            $row['is_deleted']
         );
     }
 }
