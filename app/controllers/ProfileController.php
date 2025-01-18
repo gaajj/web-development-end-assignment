@@ -172,4 +172,10 @@ class ProfileController
         header('Location: /profile/' . $username . '/edit');
         exit();
     }
+
+    public function getUserJson($username) {
+        header('Content-Type: application/json');
+        $user = $this->userService->getByUsername($username);
+        echo json_encode($user);
+    }
 }

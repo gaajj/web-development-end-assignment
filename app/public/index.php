@@ -32,6 +32,9 @@ $router->add('/login', AuthController::class, 'login');
 $router->add('/register', AuthController::class, 'register');
 $router->add('/logout', AuthController::class, 'logout');
 
+// -> api
+$router->add('/api/user/{username}', ProfileController::class, 'getUserJson');
+
 // -> temp
 $router->add('/hash', HomeController::class, 'hash');
 
