@@ -52,18 +52,12 @@ class UserService
     public function authenticate(string $username, string $password)
     {
         $user = $this->userRepository->getByUsername($username);
-
-        if ($user && password_verify($password, $user->password)) {
-            return $user;
-        }
-
-        return null;
+        return $user && password_verify($password, $user->password) ? $user : null;
     }
 
     public function register(string $username, string $password, ?string $email)
     {
-        // username taken
-        if ($this->userRepository->getByUsername($username)) {
+        if ($this->checkUsernameTaken($username)) {
             return false;
         }
 
