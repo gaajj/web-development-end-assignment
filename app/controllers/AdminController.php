@@ -17,8 +17,13 @@ class AdminController
     {
         session_start();
 
-        $users = $this->userService->getAll();
-
         include __DIR__ . '/../views/admin/admin.php';
+    }
+
+    public function getUsersJson()
+    {
+        header('Content-Type: application/json');
+        $users = $this->userService->getAll();
+        echo json_encode($users);
     }
 }

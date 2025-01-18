@@ -12,32 +12,12 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php if (!empty($users) && is_array($users)): ?>
-                    <?php foreach ($users as $index => $user): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($user->id); ?></td>
-                            <td><?php echo htmlspecialchars($user->username); ?></td>
-                            <td><?php echo htmlspecialchars($user->email); ?></td>
-                            <td>
-                                <a href="/profile/<?php echo htmlspecialchars($user->username); ?>"
-                                    class="btn btn-info btn-sm">View</a>
-                                <a href="/profile/<?php echo htmlspecialchars($user->username); ?>/edit"
-                                    class="btn btn-warning btn-sm">Edit</a>
-                                <a href="/profile/<?php echo htmlspecialchars($user->username); ?>/delete"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="4" class="text-center">No users found.</td>
-                    </tr>
-                <?php endif; ?>
+            <tbody id="userTableBody">
+
             </tbody>
         </table>
     </div>
 </div>
 
+<script src="/js/admin.js"></script>
 <?php include __DIR__ . '/../footer.php'; ?>
