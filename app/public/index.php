@@ -21,6 +21,7 @@ $router->add('/profile/{username}/picture', ProfileController::class, 'updatePro
 // -> post
 $router->add('/post/view/{post_id}', PostController::class, 'showPost');
 $router->add('/post/create', PostController::class, 'createPost');
+$router->add('/post/view/{post_id}/delete', PostController::class, 'removePost');
 
 // -> admin
 $router->add('/admin', AdminController::class, 'admin');

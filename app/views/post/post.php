@@ -8,6 +8,11 @@
             <p class="text-muted mt-3">
                 <small><i class="bi bi-clock"></i> Posted on <?= htmlspecialchars($post->date_posted) ?></small>
             </p>
+            <?php if ($post->author_id == $_SESSION['user_id']): ?>
+                <form action="/post/view/<?= $post->id ?>/delete" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                </form>
+            <?php endif; ?>
         </div>
     </div>
     <div>

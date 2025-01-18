@@ -71,6 +71,20 @@ class PostController
         include __DIR__ . '/../views/post/create_post.php';
     }
 
+    public function removePost($post_id)
+    {
+        session_start();
+
+        $post = $this->postService->getById($post_id);
+
+        if ($post && $_SESSION['user_id'] == $post->author_id) {
+            $this->postService->removePost($post_id);
+
+            header('Location: /');
+            exit;
+        }
+    }
+
     public function addComment($post_id)
     {
         if (!isset($_SESSION['username'])) {
@@ -87,13 +101,9 @@ class PostController
                 $comment->user_id = $_SESSION['user_id'];
                 $comment->content = $content;
                 $this->commentService->addComment($comment);
-
-                header('Location: /post/view/' . $post_id);
-                exit;
-            } else {
-                header('Location: /post/view/' . $post_id);
-                exit;
             }
+            header('Location: /post/view/' . $post_id);
+            exit;
         } else {
             //show error invalid request
         }

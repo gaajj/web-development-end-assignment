@@ -40,4 +40,9 @@ class PostService
 
         return $this->postRepository->create($post);
     }
+
+    public function removePost($post_id)
+    {
+        return $this->postRepository->remove($post_id);
+    }
 }
