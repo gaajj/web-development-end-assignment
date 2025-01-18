@@ -1,6 +1,6 @@
 <!-- Comment for logged in users -->
 <?php if (isset($_SESSION['username'])): ?>
-    <form action="/post/<?= htmlspecialchars($post->id) ?>" method="POST" class="mb-4">
+    <form action="/post/view/<?= htmlspecialchars($post->id) ?>" method="POST" class="mb-4">
         <div class="form-group mb-3">
             <textarea class="form-control" id="commentContent" name="content" rows="3"
                 placeholder="Write your comment here..." required></textarea>

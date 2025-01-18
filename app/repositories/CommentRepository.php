@@ -23,6 +23,7 @@ class Commentrepository
         FROM comments 
         INNER JOIN users ON comments.user_id = users.id 
         WHERE comments.post_id = :post_id AND comments.is_deleted = 0
+        ORDER BY comments.created_at DESC
         ';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':post_id', $postId);

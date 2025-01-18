@@ -39,6 +39,38 @@ class PostController
         }
     }
 
+    public function createPost()
+    {
+        session_start();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!isset($_SESSION['user_id'])) {
+                header('Location: /login');
+                exit;
+            }
+
+            $title = trim($_POST['title']);
+            $content = trim($_POST['content']);
+
+            if (!empty($title) && !empty($content)) {
+                $author_id = $_SESSION['user_id'];
+                $createdPost = $this->postService->createPost($title, $content, $author_id);
+
+
+                if ($createdPost) {
+                    header('Location: /post/view/' . $createdPost);
+                    exit;
+                } else {
+                    // error
+                }
+            } else {
+                // error
+            }
+        }
+
+        include __DIR__ . '/../views/post/create_post.php';
+    }
+
     public function addComment($post_id)
     {
         if (!isset($_SESSION['username'])) {
@@ -56,11 +88,10 @@ class PostController
                 $comment->content = $content;
                 $this->commentService->addComment($comment);
 
-                header('Location: /post/' . $post_id);
+                header('Location: /post/view/' . $post_id);
                 exit;
             } else {
-                $_SESSION['error_message'] = 'Comment content cannot be empty.';
-                header('Location: /post/' . $post_id);
+                header('Location: /post/view/' . $post_id);
                 exit;
             }
         } else {

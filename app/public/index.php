@@ -19,7 +19,8 @@ $router->add('/profile/{username}/edit', ProfileController::class, 'editProfile'
 $router->add('/profile/{username}/picture', ProfileController::class, 'updateProfilePicture');
 
 // -> post
-$router->add('/post/{post_id}', PostController::class, 'showPost');
+$router->add('/post/view/{post_id}', PostController::class, 'showPost');
+$router->add('/post/create', PostController::class, 'createPost');
 
 // -> admin
 $router->add('/admin', AdminController::class, 'admin');

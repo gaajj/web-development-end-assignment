@@ -61,4 +61,26 @@ class PostRepository
             );
         }
     }
+
+    public function create($post)
+    {
+        $query = 'INSERT INTO posts (title, content, author_id) VALUES (:title, :content, :author_id)';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':title', $post->title);
+        $stmt->bindParam(':content', $post->content);
+        $stmt->bindParam(':author_id', $post->author_id);
+        $stmt->execute();
+
+        return $this->db->lastInsertId();
+    }
+
+    public function remove($post_id)
+    {
+        $query = 'UPDATE posts SET is_deleted = 1 WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $post_id);
+        $stmt->execute();
+
+        return $this->db->lastInsertId();
+    }
 }

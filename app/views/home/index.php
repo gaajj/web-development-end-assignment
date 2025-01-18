@@ -5,7 +5,7 @@
     <ul class="list-group">
         <?php foreach ($posts as $post): ?>
             <li class="list-group-item p-0">
-                <a href="post/<?= htmlspecialchars($post->id) ?>" class="d-block text-decoration-none text-dark">
+                <a href="post/view/<?= htmlspecialchars($post->id) ?>" class="d-block text-decoration-none text-dark">
                     <div class="d-flex align-items-start p-3">
                         <!--<img src="<?= htmlspecialchars($post->imageUrl) ?>" class="me-3 rounded" alt="<?= htmlspecialchars($post->title) ?>" style="width: 64px; height: 64px; object-fit: cover;"> -->
                         <div>

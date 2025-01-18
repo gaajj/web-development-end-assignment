@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Post;
 use App\Repositories\PostRepository;
 
 class PostService
@@ -22,5 +23,21 @@ class PostService
     public function getById($id)
     {
         return $this->postRepository->getById($id);
+    }
+
+    public function createPost($title, $content, $author_id)
+    {
+        $post = new Post(
+            null,
+            $title,
+            $content,
+            null,
+            0,
+            0,
+            $author_id,
+            0
+        );
+
+        return $this->postRepository->create($post);
     }
 }
