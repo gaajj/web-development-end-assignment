@@ -108,4 +108,18 @@ class PostController
             //show error invalid request
         }
     }
+
+    public function removeComment($post_id, $comment_id)
+    {
+        session_start();
+
+        $comment = $this->commentService->getCommentById($comment_id);
+
+        if ($comment && $_SESSION['user_id'] == $comment->user_id) {
+            $this->commentService->removeComment($comment);
+
+            header('Location: /post/view/' . $post_id);
+            exit;
+        }
+    }
 }

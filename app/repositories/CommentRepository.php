@@ -48,6 +48,29 @@ class Commentrepository
         return $comments;
     }
 
+    public function getCommentById($id)
+    {
+        $query = 'SELECT * FROM comments WHERE id = :id AND is_deleted = 0';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $comment = new Comment(
+                $result['id'],
+                $result['user_id'],
+                $result['post_id'],
+                $result['content'],
+                $result['created_at'],
+                $result['is_deleted']
+            );
+            return $comment;
+        }
+        return null;
+    }
+
     public function addComment($comment)
     {
         $query = 'INSERT INTO comments (user_id, post_id, content, created_at, is_deleted)
@@ -56,6 +79,14 @@ class Commentrepository
         $stmt->bindParam(':user_id', $comment->user_id);
         $stmt->bindParam(':post_id', $comment->post_id);
         $stmt->bindParam(':content', $comment->content);
+        $stmt->execute();
+    }
+
+    public function removeComment($comment)
+    {
+        $query = 'UPDATE comments SET is_deleted = 1 WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $comment->id);
         $stmt->execute();
     }
 }
