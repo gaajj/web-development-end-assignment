@@ -120,4 +120,11 @@ class PostController
             exit;
         }
     }
+
+    public function getPostJson($post_id)
+    {
+        header('Content-Type: application/json');
+        $post = $this->postService->getById($post_id);
+        echo json_encode($post);
+    }
 }
