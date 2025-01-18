@@ -4,7 +4,7 @@
         <div class="d-flex align-items-center">
             <!-- Profile picture -->
             <a href="/profile/<?= htmlspecialchars($comment->username) ?>" class="me-3">
-                <img src="<?= !empty($user->profile_picture) ? '/../../uploads/profiles/' . htmlspecialchars($user->profile_picture) : '/../../uploads/profiles/default.png' ?>"
+                <img src="<?= !empty($comment->profile_picture) ? '/../../uploads/profiles/' . htmlspecialchars($comment->profile_picture) : '/../../uploads/profiles/default.png' ?>"
                     alt="Profile Picture" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
             </a>
             <!-- Username -->
