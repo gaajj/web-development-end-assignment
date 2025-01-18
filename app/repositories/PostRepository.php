@@ -20,22 +20,12 @@ class PostRepository
     {
         $query = 'SELECT * FROM posts WHERE is_deleted = 0';
         $stmt = $this->db->query($query);
-
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         $posts = [];
-        foreach ($results as $row) {
-            $posts[] = new Post(
-                $row['id'],
-                $row['title'],
-                $row['content'],
-                $row['date_posted'],
-                $row['upvote_count'],
-                $row['downvote_count'],
-                $row['author_id'],
-                $row['is_deleted']
-            );
+
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $posts[] = $this->postReader($row);
         }
+
         return $posts;
     }
 
@@ -43,26 +33,14 @@ class PostRepository
     {
         $query = 'SELECT * FROM posts WHERE id = :id AND is_deleted = 0';
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            return new Post(
-                $result['id'],
-                $result['title'],
-                $result['content'],
-                $result['date_posted'],
-                $result['upvote_count'],
-                $result['downvote_count'],
-                $result['author_id'],
-                $result['is_deleted']
-            );
-        }
+        return $row ? $this->postReader($row) : null;
     }
 
-    public function create($post)
+    public function create(Post $post)
     {
         $query = 'INSERT INTO posts (title, content, author_id) VALUES (:title, :content, :author_id)';
         $stmt = $this->db->prepare($query);
@@ -82,5 +60,19 @@ class PostRepository
         $stmt->execute();
 
         return $this->db->lastInsertId();
+    }
+
+    public function postReader($row)
+    {
+        return new Post(
+            $row['id'],
+            $row['title'],
+            $row['content'],
+            $row['date_posted'],
+            $row['upvote_count'],
+            $row['downvote_count'],
+            $row['author_id'],
+            $row['is_deleted']
+        );
     }
 }

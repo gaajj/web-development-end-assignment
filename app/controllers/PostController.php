@@ -52,10 +52,9 @@ class PostController
             $title = trim($_POST['title']);
             $content = trim($_POST['content']);
 
-            if (!empty($title) && !empty($content)) {
+            if ($title && $content) {
                 $author_id = $_SESSION['user_id'];
                 $createdPost = $this->postService->createPost($title, $content, $author_id);
-
 
                 if ($createdPost) {
                     header('Location: /post/view/' . $createdPost);
@@ -117,7 +116,6 @@ class PostController
 
         if ($comment && $_SESSION['user_id'] == $comment->user_id) {
             $this->commentService->removeComment($comment);
-
             header('Location: /post/view/' . $post_id);
             exit;
         }

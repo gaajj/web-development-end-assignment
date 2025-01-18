@@ -21,10 +21,9 @@ class UserRepository
     {
         $query = 'SELECT id, username, password, email, role, profile_picture FROM users';
         $stmt = $this->db->query($query);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $users = [];
-        foreach ($results as $result) {
-            $users[] = new User($result['id'], $result['username'], $result['password'], $result['email'], $result['role'], $result['profile_picture']);
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $users[] = $this->userReader($row);
         }
         return $users;
     }
@@ -35,13 +34,9 @@ class UserRepository
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
-            return new User($result['id'], $result['username'], $result['password'], $result['email'], $result['role'], $result['profile_picture']);
-        }
-
-        return null;
+        return $row ? $this->userReader($row) : null;
     }
 
     public function getById($id)
@@ -50,13 +45,9 @@ class UserRepository
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
-            return new User($result['id'], $result['username'], $result['password'], $result['email'], $result['role'], $result['profile_picture']);
-        }
-
-        return null;
+        return $row ? $this->userReader($row) : null;
     }
 
     public function checkUsernameTaken($username)
@@ -65,9 +56,9 @@ class UserRepository
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) return True;
-        else return False;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row ? true : false;
     }
 
     public function update($userId, $username, $email)
@@ -77,8 +68,8 @@ class UserRepository
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
-        $stmt->execute();
-        return true;
+
+        return $stmt->execute();
     }
 
     public function updateByUsername($currentUsername, $newUsername, $newEmail)
@@ -88,6 +79,7 @@ class UserRepository
         $stmt->bindParam(':newUsername', $newUsername);
         $stmt->bindParam(':newEmail', $newEmail);
         $stmt->bindParam(':currentUsername', $currentUsername);
+
         return $stmt->execute();
     }
 
@@ -97,6 +89,7 @@ class UserRepository
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':profile_picture', $picturePath);
         $stmt->bindParam(':username', $username);
+
         return $stmt->execute();
     }
 
@@ -108,5 +101,17 @@ class UserRepository
         $stmt->bindParam(':password', $user->password, PDO::PARAM_STR);
         $stmt->bindParam(':email', $user->email, PDO::PARAM_STR);
         $stmt->execute();
+    }
+
+    public function userReader($row)
+    {
+        return new User(
+            $row['id'],
+            $row['username'],
+            $row['password'],
+            $row['email'],
+            $row['role'],
+            $row['profile_picture'] ?? null
+        );
     }
 }
