@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody id="userTableBody">
-                <!-- User rows will be populated by JavaScript -->
+
             </tbody>
         </table>
     </div>
@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody id="postTableBody">
-                <!-- Post rows will be populated by JavaScript -->
+
             </tbody>
         </table>
     </div>

@@ -48,8 +48,7 @@ CREATE TABLE `comments` (
     FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
 );
 
- -- DATA
-
+-- Users Table Insertions
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `profile_picture`) VALUES
     (1, 'admin', '$2y$12$majf1c5yGQjVzcqiaTwSH.rNUHDULi9DegudTKT53TeGQqWtfe/GG', 'admin@example.com', 'admin', NULL),
     (2, 'user', '$2y$12$ydpt94dLBPuTITkDU4eUTOpDLECJtH5iLdDM2kaVqIMZTvRv6dVbu', 'user@example.com', NULL, '678d50afe60be_Cat_November_2010-1a.jpg.png'),

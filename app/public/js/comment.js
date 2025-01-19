@@ -7,19 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const charCount = commentContent.value.length;
         charCounter.textContent = `${charCount} / 1000 characters`;
 
-        if (charCount > 900) {
-            charCounter.style.color = "red"; // Show warning when close to limit
-        } else {
-            charCounter.style.color = "gray";
-        }
-
         if (charCount > 1000) {
-            commentContent.value = commentContent.value.slice(0, 1000); // Truncate input to 1000 characters
-            charCounter.textContent = `1000 / 1000 characters`; // Set counter to max
+            commentContent.value = commentContent.value.slice(0, 1000);
+            charCounter.textContent = `1000 / 1000 characters`;
         }
     }
 
     commentContent.addEventListener("input", updateCharCounter);
 
-    updateCharCounter(); // Initialize the counter on page load
+    updateCharCounter();
 });

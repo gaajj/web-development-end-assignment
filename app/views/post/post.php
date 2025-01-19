@@ -12,9 +12,9 @@
 
             <!-- Delete Post Button (for author) -->
             <?php if (isset($_SESSION['user_id']) && ($post->author_id == $_SESSION['user_id'] || $_SESSION['role'] == 'admin')): ?>
-                <form action="/post/view/<?= $post->id ?>/delete" method="POST" class="d-inline">
-                    <button type="submit" class="btn btn-danger">Delete Post</button>
-                </form>
+            <form action="/post/view/<?= $post->id ?>/delete" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger">Delete Post</button>
+            </form>
             <?php endif; ?>
         </div>
     </div>
@@ -25,10 +25,9 @@
 
         <!-- Display Error if Exists -->
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
 
-        <!-- Include Comments -->
         <?php include __DIR__ . '/comments.php'; ?>
     </div>
 </div>

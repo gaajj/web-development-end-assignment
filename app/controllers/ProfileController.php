@@ -188,8 +188,6 @@ class ProfileController
                 header('Location: /admin');
                 exit;
             }
-        } else {
-            // error
         }
     }
 

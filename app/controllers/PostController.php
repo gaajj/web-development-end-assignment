@@ -59,11 +59,7 @@ class PostController
                 if ($createdPost) {
                     header('Location: /post/view/' . $createdPost);
                     exit;
-                } else {
-                    // error
                 }
-            } else {
-                // error
             }
         }
 
@@ -103,8 +99,6 @@ class PostController
             }
             header('Location: /post/view/' . $post_id);
             exit;
-        } else {
-            //show error invalid request
         }
     }
 
