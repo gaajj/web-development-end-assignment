@@ -30,7 +30,7 @@ class UserRepository
 
     public function getByUsername($username)
     {
-        $query = 'SELECT id, username, password, email, role, profile_picture, is_deleted FROM users WHERE username=:username';
+        $query = 'SELECT id, username, password, email, role, profile_picture, is_deleted FROM users WHERE username=:username AND is_deleted = 0';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
@@ -52,13 +52,13 @@ class UserRepository
 
     public function checkUsernameTaken($username)
     {
-        $query = 'SELECT id FROM users WHERE username=:username';
+        $query = 'SELECT COUNT(*) as count FROM users WHERE username = :username AND is_deleted = 0';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $row ? true : false;
+        return $row['count'] > 0;
     }
 
     public function update($userId, $username, $email)
