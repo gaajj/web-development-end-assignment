@@ -48,19 +48,21 @@ CREATE TABLE `comments` (
     FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
 );
 
-INSERT INTO users (username, password, email, role) VALUES
-    ("admin", "$2y$12$majf1c5yGQjVzcqiaTwSH.rNUHDULi9DegudTKT53TeGQqWtfe/GG", "admin@example.com", "admin"); /* admin:admin */
+ -- DATA
 
-INSERT INTO users (username, password, email) VALUES
-    ("user", "$2y$12$ydpt94dLBPuTITkDU4eUTOpDLECJtH5iLdDM2kaVqIMZTvRv6dVbu", "user@example.com"), /* user:user */
-    ("bart", "$2y$12$Fw/xNr5A.TyhECCTUbl.puS.vN6j20c7uHje2vWDK7A7/Xnih1hX6", ""), /* bart:BartDePinda17 */
-    ("alice", "$2y$12$D2g7EzSkzFkDfnzPDBQ/mSCaDEbY.k.kGhDgVvfUMkOQlOn8W2iEq", "alice@example.com"), /* alice:Alice12345 */
-    ("bob", "$2y$12$0p5VvYZcf6TA8wm6IG9EKeFgozm50c6KpmP59YqjNl6s.TjlYpAeW", "bob@example.com"), /* bob:Bob67890 */
-    ("charlie", "$2y$12$7nmcEdglV0l5YXGHh4TtM2MUE4dx6BzjrcD2zsvijOpaTUVGzQ5hG", "charlie@example.com"), /* charlie:Charlie2023 */
-    ("david", "$2y$12$VrDLRjTnHZ8S1Bb2sf02deSgbYy7z57tKNVX9n2GoMSeKJ2tdmgjS", "david@example.com"), /* david:David9876 */
-    ("eve", "$2y$12$92e9nCUWNm.ay9s9u7a39Od6FgAOmKrFocOdpzfxfJl4zNj.Hgjs6", "eve@example.com"), /* eve:Eve2468 */
-    ("frank", "$2y$12$y3zF1nHaHuaDYvHqZ6OFSePUmPOgPCmF3OrQjlxsoZtyIbbRWf.7O", "frank@example.com"), /* frank:Frank12345 */
-    ("grace", "$2y$12$z9x9mjysUjUKhBeMjrLZBYwmex0pxbKdbtqgTjTw1qlqRU9wXQDLf", "grace@example.com"); /* grace:Grace789 */
+INSERT INTO `users`(`id`, `username`, `password`, `email`, `role`) VALUES
+(1, 'admin', '$2y$12$majf1c5yGQjVzcqiaTwSH.rNUHDULi9DegudTKT53TeGQqWtfe/GG', 'admin@example.com', 'admin');
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(2, 'user', '$2y$12$ydpt94dLBPuTITkDU4eUTOpDLECJtH5iLdDM2kaVqIMZTvRv6dVbu', 'user@example.com'),
+(4, 'alice', '$2y$12$D83me2a7pUaT69EkMpIvEe/7CoYuDYu4Iay0.Oi0um1FPzg5LyE4G', 'alice@example.com'),
+(5, 'bob', '$2y$12$HnjNR3DyPGc7W9hMT0.JJ.EA4WFdCzY8KyqqWiRKTYM8hrfrFXcSS', 'bob@example.com'),
+(6, 'charlie', '$2y$12$PHFLhXiG269lYkcxYKx2hu3ANyYUwn06A4qge8x.oBxAdiD2rUls6', 'charlie@example.com'),
+(7, 'david', '$2y$12$TumS687lKQ2UBuWfc7Vvt.tIRmBB.UVOv1U44drFFNpnbslRmSawG', 'david@example.com'),
+(8, 'eve', '$2y$12$WR6iJzWpsXqY8beee4zq7OYwOJmRKan.CpawqLoU1zdGflBheCbIK', 'eve@example.com'),
+(9, 'frank', '$2y$12$siy0/JOOQ1DRs3C/gsnt..gAo0Ptpb11W.9qPnZPWP3MTuxkCNjBi', 'frank@example.com'),
+(10, 'grace', '$2y$12$06il3PZoDn3LvqzYiQxjmuUkx8QJr0xxYhWKklLNbo5UscQAAsRuS', 'grace@example.com');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `profile_picture`) VALUES
+(3, 'bart', '$2y$12$2S.m5AXGkn4dbAeEZVchBu03guY1Z9WvNah9Pmi/5r269Jgt8Ep7e', 'bart@example.com', '678d4eba67caa_image.png');
 
 INSERT INTO posts (title, content, author_id) VALUES
     ('How to Learn SQL', 'SQL is a fundamental skill for database management. Start by learning the basic commands like SELECT, INSERT, UPDATE, DELETE.', 1), -- admin
@@ -95,21 +97,6 @@ INSERT INTO comments (user_id, post_id, content) VALUES
     (1, 5, 'I can’t wait for the advancements in quantum computing!'), -- admin commenting on post 5
     (2, 5, 'Quantum computing will completely transform data encryption!'); -- user commenting on post 5
 
-
-
--- AI::
--- Add more users
-INSERT INTO users (username, password, email, role) VALUES
-    ("john", "$2y$12$majf1c5yGQjVzcqiaTwSH.rNUHDULi9DegudTKT53TeGQqWtfe/GG", "john@example.com", "user"), /* john:john */
-    ("jane", "$2y$12$ydpt94dLBPuTITkDU4eUTOpDLECJtH5iLdDM2kaVqIMZTvRv6dVbu", "jane@example.com", "user"), /* jane:jane */
-    ("mike", "$2y$12$Fw/xNr5A.TyhECCTUbl.puS.vN6j20c7uHje2vWDK7A7/Xnih1hX6", "mike@example.com", "user"), /* mike:mike */
-    ("sarah", "$2y$12$D2g7EzSkzFkDfnzPDBQ/mSCaDEbY.k.kGhDgVvfUMkOQlOn8W2iEq", "sarah@example.com", "user"), /* sarah:sarah */
-    ("chris", "$2y$12$0p5VvYZcf6TA8wm6IG9EKeFgozm50c6KpmP59YqjNl6s.TjlYpAeW", "chris@example.com", "user"), /* chris:chris */
-    ("lisa", "$2y$12$7nmcEdglV0l5YXGHh4TtM2MUE4dx6BzjrcD2zsvijOpaTUVGzQ5hG", "lisa@example.com", "user"), /* lisa:lisa */
-    ("peter", "$2y$12$VrDLRjTnHZ8S1Bb2sf02deSgbYy7z57tKNVX9n2GoMSeKJ2tdmgjS", "peter@example.com", "user"), /* peter:peter */
-    ("emily", "$2y$12$92e9nCUWNm.ay9s9u7a39Od6FgAOmKrFocOdpzfxfJl4zNj.Hgjs6", "emily@example.com", "user"), /* emily:emily */
-    ("dave", "$2y$12$y3zF1nHaHuaDYvHqZ6OFSePUmPOgPCmF3OrQjlxsoZtyIbbRWf.7O", "dave@example.com", "user"), /* dave:dave */
-    ("olivia", "$2y$12$z9x9mjysUjUKhBeMjrLZBYwmex0pxbKdbtqgTjTw1qlqRU9wXQDLf", "olivia@example.com", "user"); /* olivia:olivia */
 
 -- Add more posts
 INSERT INTO posts (title, content, author_id) VALUES
