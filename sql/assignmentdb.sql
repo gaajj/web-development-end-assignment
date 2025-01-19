@@ -73,7 +73,7 @@ INSERT INTO `posts` (`title`, `content`, `author_id`) VALUES
     ('Introduction to Machine Learning', 'Machine learning is a subset of AI that focuses on building systems that learn from data.', 8),
     ('The Rise of NoSQL Databases', 'NoSQL databases like MongoDB and Cassandra are gaining popularity for their flexibility and scalability.', 9),
     ('Best Practices for API Design', 'Designing APIs requires careful planning to ensure they are scalable, secure, and easy to use.', 10),
-    ('Hacker man', '<script>alert('XSS')</script>', 11);
+    ('Hacker man', '<script>alert(''XSS'')</script>', 7);
 
 -- Comments Table Insertions
 INSERT INTO comments (user_id, post_id, content) VALUES
