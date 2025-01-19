@@ -1,5 +1,5 @@
 # TechBlog
-
+I deviated a bit from my initial use case because I ran out of time.
 
 ## Usage
 To start the application, use:
