@@ -37,6 +37,7 @@ $router->add('/logout', AuthController::class, 'logout');
 $router->add('/api/users', AdminController::class, 'getUsersJson');
 $router->add('/api/user/{username}', ProfileController::class, 'getUserJson');
 $router->add('/api/post/{id}', PostController::class, 'getPostJson');
+$router->add('/api/posts', PostController::class, 'getPostsJson');
 
 // -> temp
 $router->add('/hash', HomeController::class, 'hash');

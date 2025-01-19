@@ -13,7 +13,25 @@
                 </tr>
             </thead>
             <tbody id="userTableBody">
+                <!-- User rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
 
+    <h2 class="text-center mb-4">Post List</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Author ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="postTableBody">
+                <!-- Post rows will be populated by JavaScript -->
             </tbody>
         </table>
     </div>

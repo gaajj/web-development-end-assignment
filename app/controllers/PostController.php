@@ -127,4 +127,11 @@ class PostController
         $post = $this->postService->getById($post_id);
         echo json_encode($post);
     }
+
+    public function getPostsJson()
+    {
+        header('Content-Type: application/json');
+        $posts = $this->postService->getAll();
+        echo json_encode($posts);
+    }
 }
