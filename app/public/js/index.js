@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json())
             .then((posts) => {
                 postsContainer.innerHTML = "";
-                posts.forEach((post) => {
+                posts.reverse().forEach((post) => {
                     const postCard = document.createElement("div");
                     postCard.className = "col-md-6 mb-4";
                     postCard.innerHTML = `
