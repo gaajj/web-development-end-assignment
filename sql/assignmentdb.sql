@@ -73,7 +73,8 @@ INSERT INTO `posts` (`title`, `content`, `author_id`) VALUES
     ('Getting Started with Docker', 'Docker simplifies application deployment by containerizing your apps. Here’s how to get started.', 7),
     ('Introduction to Machine Learning', 'Machine learning is a subset of AI that focuses on building systems that learn from data.', 8),
     ('The Rise of NoSQL Databases', 'NoSQL databases like MongoDB and Cassandra are gaining popularity for their flexibility and scalability.', 9),
-    ('Best Practices for API Design', 'Designing APIs requires careful planning to ensure they are scalable, secure, and easy to use.', 10);
+    ('Best Practices for API Design', 'Designing APIs requires careful planning to ensure they are scalable, secure, and easy to use.', 10),
+    ('Hacker man', '<script>alert('XSS')</script>', 11);
 
 -- Comments Table Insertions
 INSERT INTO comments (user_id, post_id, content) VALUES
@@ -136,4 +137,6 @@ INSERT INTO comments (user_id, post_id, content) VALUES
     (1, 10, 'Good API design is essential for building scalable applications.'),
     (2, 10, 'I always ensure APIs are well-documented for easier integration.'),
     (3, 10, 'Security in API design should never be overlooked.'),
-    (4, 10, 'REST APIs have been my go-to for most of my projects.');
+    (4, 10, 'REST APIs have been my go-to for most of my projects.'),
+
+    (4, 11, 'What the flip !? ');
