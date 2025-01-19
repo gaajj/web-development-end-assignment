@@ -175,9 +175,19 @@ class ProfileController
 
     public function deleteProfile($username)
     {
+        session_start();
+
         $user = $this->userService->getByUsername($username);
+
         if ($user) {
             $this->userService->deleteProfile($user);
+            if ($user->id == $_SESSION['user_id']) {
+                header('Location: /');
+                exit;
+            } elseif ($_SESSION['role'] == 'admin') {
+                header('Location: /admin');
+                exit;
+            }
         } else {
             // error
         }

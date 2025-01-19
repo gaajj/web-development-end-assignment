@@ -26,7 +26,7 @@
                     <th>#</th>
                     <th>Title</th>
                     <th>Content</th>
-                    <th>Author ID</th>
+                    <th>Author</th>
                     <th>Actions</th>
                 </tr>
             </thead>
